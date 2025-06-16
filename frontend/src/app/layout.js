@@ -8,8 +8,8 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "Kazi Tishan",
-  description: "My Portfolio Website",
+  title: "Kazino Sportsbook",
+  description: "Bet on real games without suffering the consequences",
 };
 
 export default function RootLayout({ children }) {
