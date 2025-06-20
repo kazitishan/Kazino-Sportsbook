@@ -1,53 +1,58 @@
-import Image from "next/image";
+"use client";
+
+import React, { useEffect, useState } from "react";
 
 export default function Home() {
-  const competitions = [
-    "UEFA Nations League",
-    "Copa America",
-    "UCL",
-    "UEL",
-    "UECL",
-    "UEFA Super Cup",
-    "FIFA Club World Cup",
-    "Premier League",
-    "La Liga",
-    "Bundesliga",
-    "Serie A",
-    "Ligue 1",
-    "EFL Championship",
-    "FA Cup",
-    "EFL Cup",
-    "Community Shield",
-    "Supercopa de España",
-    "Copa del Rey",
-    "DFB Pokal",
-    "German Super Cup",
-    "Coppa Italia",
-    "Supercoppa Italiana",
-    "Coupe de France",
-    "French Super Cup"
-  ];
+  const [matches, setMatches] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchMatches = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/matches/fifa club world cup");
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        setMatches(data);
+      } catch (err) {
+        setError(err.message);
+        console.error("Error fetching matches:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMatches();
+  }, []);
+
+  if (loading) {
+    return <div>Loading matches...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  if (!matches) {
+    return <div>No matches found</div>;
+  }
 
   return (
-    <div className="min-h-screen p-8 bg-gray-50">
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
-        {competitions.map((competition) => (
-          <div 
-            key={competition} 
-            className="flex flex-col items-center p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow"
-          >
-            <div className="relative w-24 h-24 mb-2">
-              <Image
-                src={`/competitions/${competition}.svg`}
-                alt={competition}
-                fill
-                className="object-contain"
-                sizes="(max-width: 768px) 100px, (max-width: 1200px) 150px, 200px"
-              />
-            </div>
-            <p className="text-sm font-medium text-center text-gray-700 mt-2">
-              {competition}
+    <div>
+      <h1>{matches.competition}</h1>
+      <div>
+        {matches.matches.map((match, index) => (
+          <div key={index} style={{ marginBottom: "20px", padding: "10px", border: "1px solid #ccc" }}>
+            <h3>{match.homeTeam} vs {match.awayTeam}</h3>
+            <p>Date: {match.dateTime}</p>
+            <p>Odds: 
+              Home: {match.odds[0]} | 
+              Draw: {match.odds[1]} | 
+              Away: {match.odds[2]}
             </p>
+            <a href={match.matchLink}>Match details</a>
           </div>
         ))}
       </div>
