@@ -1,4 +1,6 @@
 const puppeteer = require('puppeteer');
+const fs = require('fs').promises;
+const path = require('path');
 
 async function getResult(matchLink) {
     const browser = await puppeteer.launch({headless: true});
@@ -123,6 +125,30 @@ async function getMatches(fixturesUrl) {
     }
 }
 
+async function getAllMatches() {
+    try {
+        const competitionsPath = path.join(__dirname, 'competitions.json');
+        const competitionsData = await fs.readFile(competitionsPath, 'utf8');
+        const competitions = JSON.parse(competitionsData);
+        
+        const matchesByCompetition = {};
+        
+        for (const competition of competitions) {
+            try {
+                const matches = await getMatches(competition.link);
+                matchesByCompetition[competition.competition] = matches;
+            } catch (error) {
+                matchesByCompetition[competition.competition] = [];
+            }
+        }
+        
+        return matchesByCompetition;
+        
+    } catch (error) {
+        throw new Error(`Error in getAllMatches: ${error.message}`);
+    }
+}
+
 (async () => {
     // try {
     //     const clubWorldCupMatches = await getMatches("https://www.betexplorer.com/football/world/fifa-club-world-cup/fixtures/?stage=KOtwQCtI");
@@ -137,9 +163,22 @@ async function getMatches(fixturesUrl) {
     // } catch (error) {
     //     console.error("Error getting result:", error);
     // }
+
+    // usage of getAllMatches:
+    // try {
+    //     const allMatches = await getAllMatches();
+    //     console.log("All matches grouped by competition:", allMatches);
+        
+    //     // Access specific competition matches:
+    //     console.log("Premier League matches:", allMatches["Premier League"]);
+    //     console.log("UCL matches:", allMatches["UCL"]);
+    // } catch (error) {
+    //     console.error("Error getting all matches:", error);
+    // }
 })();
 
 module.exports = {
     getResult,
-    getMatches
+    getMatches,
+    getAllMatches
 };
