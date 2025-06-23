@@ -1,7 +1,6 @@
 function Match({ match }) {
     return (
         <div className="flex flex-col mb-4 p-6 bg-white shadow-lg hover:shadow-xl border border-gray-200 rounded-2xl transition-all duration-300 hover:scale-[1.02]">
-            {/* Existing match info */}
             <div className="flex items-center">
                 <div className={`${match.matchLink} text-center w-1/4 flex flex-col justify-center space-y-2`}>
                     <p className="font-semibold text-lg text-gray-800">{match.homeTeam}</p>
