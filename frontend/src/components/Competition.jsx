@@ -11,12 +11,19 @@ async function Competition({ name }) {
 
         return (
             <div>
-              <h1>{matches.competition || name}</h1>
-              <div>
-                {matches.matches.map((match, index) => (
-                  <Match key={`${name}-${index}`} match={match} />
-                ))}
-              </div>
+                <div className="flex items-center p-6">
+                    <img src={`/competitions/${name}.svg`} className="w-12 h-12"></img>
+                    <h1 className="text-2xl font-bold mx-6">{matches.competition}</h1>
+                    <div className="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">
+                        {matches.matches.length}
+                    </div>
+                </div>
+
+                <div>
+                    {matches.matches.map((match, index) => (
+                    <Match key={`${name}-${index}`} match={match} />
+                    ))}
+                </div>
             </div>
         );
     } catch (error) {
