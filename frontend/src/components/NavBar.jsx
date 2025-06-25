@@ -39,7 +39,7 @@ function NavBar() {
             <div className="flex flex-wrap justify-center gap-2 p-4 bg-gray-100">
                 {competitions.map((comp, index) => (
                     <Link 
-                        href={`/${comp}`} 
+                        href={`/${comp.replace(/\s+/g, '-')}`} 
                         key={`${comp}-${index}`} 
                         className="bg-blue-100 hover:bg-blue-200 text-blue-800 text-sm font-medium px-3 py-1 rounded-full whitespace-nowrap transition-colors"
                     >
