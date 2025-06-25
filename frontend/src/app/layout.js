@@ -10,6 +10,9 @@ const inter = Inter({
 export const metadata = {
   title: "Kazino Sportsbook",
   description: "Bet on real games without suffering the consequences",
+  icons: {
+    icon: '/logo.png'
+  }
 };
 
 export default function RootLayout({ children }) {
