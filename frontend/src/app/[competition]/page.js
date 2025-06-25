@@ -1,8 +1,10 @@
 import Competition from "@/components/Competition";
 
 export async function generateMetadata({ params }) {
+  const competitionName = params.competition.replace(/-/g, ' ');
+  
   return {
-    title: `${params.competition.replace(/-/g, ' ')}`,
+    title: `${competitionName} | Kazino Sportsbook`,
   };
 }
 
