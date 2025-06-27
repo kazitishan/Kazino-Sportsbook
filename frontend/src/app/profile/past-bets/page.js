@@ -1,3 +1,4 @@
+import { getResult } from "@/app/utils/result";
 import PastBet from "@/components/PastBet";
 
 export default function DisplayPastBets() {
@@ -16,12 +17,12 @@ export default function DisplayPastBets() {
   };
 
   const winningBet = {
-    competition: "UEFA Champions League",
-    dateTime: "05/15/2025 20:00 EST",
-    homeTeam: "Real Madrid",
-    awayTeam: "Bayern Munich",
-    odds: ["2.10", "3.40", "3.25"],
-    actualResult: "Home",
+    competition: "FIFA Club World Cup",
+    dateTime: "06/26/2026 15:00 EST",
+    homeTeam: "Juventus",
+    awayTeam: "Manchester City",
+    odds: ["5.00", "3.75", "1.70"],
+    actualResult: getResult("/football/world/fifa-club-world-cup/juventus-manchester-city/dzEgdp5F/#1x2"),
     wager: "$10.00",
     chosenResult: "Home",
     potentialPayout: "$21.00",
