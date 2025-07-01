@@ -8,12 +8,10 @@ export default function DisplayPastBets() {
     homeTeam: "FC Porto",
     awayTeam: "Al Ahly",
     odds: ["1.73", "4.02", "4.50"],
-    actualResult: "Away",
+    actualResult: "HOME",
     wager: "$5.00",
-    chosenResult: "Home",
-    potentialPayout: "$8.65",
-    actualPayout: "$0.00",
-    net: "-$5.00"
+    chosenResult: "HOME",
+    net: "+$5.00"
   };
 
   const winningBet = {
@@ -22,12 +20,10 @@ export default function DisplayPastBets() {
     homeTeam: "Juventus",
     awayTeam: "Manchester City",
     odds: ["5.00", "3.75", "1.70"],
-    actualResult: getResult("/football/world/fifa-club-world-cup/juventus-manchester-city/dzEgdp5F/#1x2"),
+    actualResult: "AWAY",
     wager: "$10.00",
-    chosenResult: "Home",
-    potentialPayout: "$21.00",
-    actualPayout: "$21.00",
-    net: "+$11.00"
+    chosenResult: "AWAY",
+    net: "+$7.00"
   };
     
   return (
@@ -35,6 +31,7 @@ export default function DisplayPastBets() {
       <h2 className="text-2xl font-bold mb-6 text-gray-800">Past Bets</h2>
       <PastBet pastBet={exampleBet} />
       <PastBet pastBet={winningBet} />
+      <p>{console.log(winningBet.actualResult)}</p>
     </div>
   );
 }

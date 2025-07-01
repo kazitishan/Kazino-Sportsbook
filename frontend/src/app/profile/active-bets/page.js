@@ -8,7 +8,7 @@ export default function DisplayActiveBets() {
     awayTeam: "Tottenham",
     odds: ["1.37", "5.12", "7.28"],
     wager: "$5.00",
-    chosenResult: "Home",
+    chosenResult: "HOME",
     potentialPayout: "$6.85",
     link: "/football/europe/uefa-super-cup/psg-tottenham/8CroQLLc/"
   };

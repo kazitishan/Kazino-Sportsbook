@@ -1,8 +1,42 @@
+"use client"
+import { useState, useEffect } from 'react';
+
 function Match({ match }) {
+    const [selectedOdd, setSelectedOdd] = useState(null);
+    const [wagerAmount, setWagerAmount] = useState('');
+    const [potentialPayout, setPotentialPayout] = useState('$0.00');
+    const oddsTypes = ["HOME", "DRAW", "AWAY"];
+
+    useEffect(() => {
+        if (selectedOdd && wagerAmount) {
+            const oddIndex = oddsTypes.indexOf(selectedOdd);
+            const payout = (parseFloat(wagerAmount) * parseFloat(match.odds[oddIndex])).toFixed(2);
+            setPotentialPayout(`$${payout}`);
+        } else {
+            setPotentialPayout('$0.00');
+        }
+    }, [selectedOdd, wagerAmount]);
+
+    const handleOddSelection = (oddType) => {
+        setSelectedOdd(prev => prev === oddType ? null : oddType);
+    };
+
+    const handleWagerChange = (e) => {
+        const value = e.target.value;
+        if (/^\d*\.?\d{0,2}$/.test(value) || value === '') {
+            setWagerAmount(value);
+        }
+    };
+
+    const isBetReady = selectedOdd && wagerAmount;
+
     return (
         <div className="flex flex-col mb-4 p-6 bg-white shadow-lg hover:shadow-xl border border-gray-200 rounded-2xl transition-all duration-300 hover:scale-[1.02]">
             <div className="flex items-center">
-                <div className={`${match.matchLink} text-center w-1/4 flex flex-col justify-center space-y-2`}>
+                <div 
+                    data-match-link={match.matchLink}
+                    className="text-center w-1/4 flex flex-col justify-center space-y-2"
+                >
                     <p className="font-semibold text-lg text-gray-800">{match.homeTeam}</p>
                     <div className="flex items-center justify-center">
                         <div className="w-8 h-px bg-gray-300"></div>
@@ -15,44 +49,60 @@ function Match({ match }) {
                 
                 <div className="w-3/4 flex flex-col gap-4 pl-6">
                     <div className="flex gap-3 h-full">
-                        <button className="w-1/3 h-28 bg-gradient-to-b from-white to-gray-50 border-2 border-blue-200 hover:border-[#09C285] hover:bg-gradient-to-b hover:from-[#09C285] hover:to-[#07a572] text-gray-700 hover:text-white px-4 py-3 rounded-2xl transition-all duration-300 hover:shadow-lg hover:-translate-y-1 font-semibold text-lg">
-                            <div className="text-xs text-gray-500 hover:text-white/80 mb-1">HOME</div>
-                            {match.odds[0]}
-                        </button>
-                        <button className="w-1/3 h-28 bg-gradient-to-b from-white to-gray-50 border-2 border-gray-200 hover:border-[#09C285] hover:bg-gradient-to-b hover:from-[#09C285] hover:to-[#07a572] text-gray-700 hover:text-white px-4 py-3 rounded-2xl transition-all duration-300 hover:shadow-lg hover:-translate-y-1 font-semibold text-lg">
-                            <div className="text-xs text-gray-500 hover:text-white/80 mb-1">DRAW</div>
-                            {match.odds[1]}
-                        </button>
-                        <button className="w-1/3 h-28 bg-gradient-to-b from-white to-gray-50 border-2 border-red-200 hover:border-[#09C285] hover:bg-gradient-to-b hover:from-[#09C285] hover:to-[#07a572] text-gray-700 hover:text-white px-4 py-3 rounded-2xl transition-all duration-300 hover:shadow-lg hover:-translate-y-1 font-semibold text-lg">
-                            <div className="text-xs text-gray-500 hover:text-white/80 mb-1">AWAY</div>
-                            {match.odds[2]}
-                        </button>
+                        {oddsTypes.map((oddType, index) => (
+                            <button 
+                                key={oddType}
+                                className={`w-1/3 h-28 border-2 border-[#09C285] ${
+                                    selectedOdd === oddType 
+                                        ? 'bg-[#effbf6] text-[#09C285]' 
+                                        : 'bg-white text-gray-700 hover:-translate-y-1'
+                                } px-4 py-3 rounded-2xl transition-all duration-300 font-semibold text-lg`}
+                                onClick={() => handleOddSelection(oddType)}
+                            >
+                                <div className={`text-xs mb-1 ${
+                                    selectedOdd === oddType ? 'text-[#09C285]' : 'text-gray-500'
+                                }`}>{oddType}</div>
+                                {match.odds[index]}
+                            </button>
+                        ))}
                     </div>
 
                     <div className="flex items-center gap-3 w-full">
                         <div className="w-1/4">
                             <label className="block text-xs font-medium text-gray-500 mb-1">Wager</label>
                             <input
-                                type="number"
+                                type="text"
+                                inputMode="decimal"
                                 className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#09C285] focus:border-transparent"
                                 placeholder="$0.00"
+                                value={wagerAmount}
+                                onChange={handleWagerChange}
                             />
                         </div>
 
                         <div className="w-1/4">
                             <label className="block text-xs font-medium text-gray-500 mb-1">Chosen Odds</label>
-                            <div className="inline-flex items-center justify-center px-3 py-2 text-sm bg-[#09C285] text-white rounded-full font-semibold">
-                                -
+                            <div className={`inline-flex items-center justify-center px-3 py-2 text-sm rounded-full font-semibold ${
+                                selectedOdd ? 'bg-[#09C285] text-white' : 'bg-gray-200 text-gray-600'
+                            }`}>
+                                {selectedOdd || '-'}
                             </div>
                         </div>
 
                         <div className="w-1/4">
                             <label className="block text-xs font-medium text-gray-500 mb-1">Potential Payout</label>
-                            <div className="text-sm font-semibold text-gray-900">$0.00</div>
+                            <div className="text-sm font-semibold text-gray-900">
+                                {potentialPayout}
+                            </div>
                         </div>
 
                         <div className="w-1/4">
-                            <button className="w-full bg-[#09C285] hover:bg-[#07a572] text-white text-sm font-semibold py-2 px-4 rounded-lg transition-colors duration-300">
+                            <button 
+                                className={`w-full text-white text-sm font-semibold py-2 px-4 rounded-lg transition-colors duration-300 ${
+                                    isBetReady ? 'bg-[#09C285] hover:bg-[#07a572]' : 'bg-gray-400 cursor-not-allowed'
+                                }`}
+                                disabled={!isBetReady}
+                            >
                                 Place Bet
                             </button>
                         </div>
