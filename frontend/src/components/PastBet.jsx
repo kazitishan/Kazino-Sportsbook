@@ -45,7 +45,7 @@ function PastBet({ pastBet }) {
 
                     <div className="flex items-center gap-3 w-full">
                         <div className="w-1/4">
-                            <label className="block text-xs font-medium text-gray-500 mb-1">Wager</label>
+                            <label className="block text-xs font-medium text-gray-500 mb-1">Wager ($)</label>
                             <div className="w-full px-3 py-2 text-sm bg-gray-50 rounded-lg">
                                 {pastBet.wager}
                             </div>

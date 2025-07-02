@@ -44,7 +44,7 @@ function ActiveBet({ activeBet }) {
 
                         <div className="flex items-center gap-3 w-full">
                             <div className="w-1/4">
-                                <label className="block text-xs font-medium text-gray-500 mb-1">Wager</label>
+                                <label className="block text-xs font-medium text-gray-500 mb-1">Wager ($)</label>
                                 <div className="w-full px-3 py-2 text-sm bg-gray-50 rounded-lg">
                                     {activeBet.wager}
                                 </div>
@@ -80,7 +80,6 @@ function ActiveBet({ activeBet }) {
                 </div>
             </div>
 
-            {/* Edit Overlay remains exactly the same */}
             {showEditOverlay && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                     <div className="bg-white rounded-2xl p-6 w-full max-w-md">

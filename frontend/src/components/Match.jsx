@@ -69,7 +69,7 @@ function Match({ match }) {
 
                     <div className="flex items-center gap-3 w-full">
                         <div className="w-1/4">
-                            <label className="block text-xs font-medium text-gray-500 mb-1">Wager</label>
+                            <label className="block text-xs font-medium text-gray-500 mb-1">Wager ($)</label>
                             <input
                                 type="text"
                                 inputMode="decimal"
