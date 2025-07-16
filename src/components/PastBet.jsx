@@ -31,7 +31,7 @@ function PastBet({ pastBet }) {
                                             ? 'border-[#09C285] bg-[#effbf6] text-[#09C285]' 
                                             : 'border-red-500 bg-red-50 text-red-500'
                                         : 'border-gray-200 bg-white text-gray-700'
-                                } rounded-2xl px-4 py-3`}
+                                } rounded-2xl px-4 py-3 font-semibold text-lg`}
                             >
                                 <div className={`text-xs mb-1 ${
                                     pastBet.chosenResult === oddType 
