@@ -1,4 +1,6 @@
 import CompetitionButton from "@/components/CompetitionButton";
+import CompetitionsSidebar from "@/components/CompetitionsSidebar";
+import SideBar from "@/components/CompetitionsSidebar";
 
 const competitions = [
   "UEFA Nations League",

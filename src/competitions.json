@@ -1,0 +1,42 @@
+{
+    "europe": [
+        "UEFA Nations League",
+        "UCL",
+        "UEL",
+        "UECL",
+        "UEFA Super Cup"
+    ],
+    "world": [
+        "FIFA Club World Cup"
+    ],
+    "south america": [
+        "Copa America"
+    ],
+    "england": [
+        "Premier League",
+        "EFL Championship",
+        "FA Cup",
+        "EFL Cup",
+        "Community Shield"
+    ],
+    "spain": [
+        "La Liga",
+        "Supercopa de España",
+        "Copa del Rey"
+    ],
+    "germany": [
+        "Bundesliga",
+        "DFB Pokal",
+        "German Super Cup"
+    ],
+    "italy": [
+        "Serie A",
+        "Coppa Italia",
+        "Supercoppa Italiana"
+    ],
+    "france": [
+        "Ligue 1",
+        "Coupe de France",
+        "French Super Cup"
+    ]
+}

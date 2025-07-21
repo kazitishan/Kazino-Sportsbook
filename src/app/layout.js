@@ -1,6 +1,7 @@
 import { Inter } from 'next/font/google';
 import "./globals.css";
 import NavBar from "@/components/NavBar";
+import CompetitionsSidebar from '@/components/CompetitionsSidebar';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -20,8 +21,11 @@ export default function RootLayout({ children }) {
     <html lang="en" className={`${inter.variable}`}>
       <body className="antialiased">
         <NavBar/>
-        <div className="max-w-4xl mx-auto">
-          {children}
+        <div className='flex'>
+          <CompetitionsSidebar/>
+          <div className="max-w-6xl mx-auto">
+            {children}
+          </div>
         </div>
       </body>
     </html>
