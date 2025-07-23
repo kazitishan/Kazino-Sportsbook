@@ -1,8 +1,10 @@
+import Card from "./Card";
+
 function ActiveBet({ activeBet }) {
     const oddsTypes = ["HOME", "DRAW", "AWAY"];
 
     return (
-        <div className="flex flex-col mb-4 p-6 bg-white shadow-lg hover:shadow-xl border border-gray-200 rounded-2xl transition-all duration-300 hover:scale-[1.02]">
+        <Card>
             <div className="flex items-center">
                 <div data-match-link={activeBet.link} className="text-center w-1/4 flex flex-col justify-center space-y-2">
                     <div className="bg-gray-100 rounded-lg px-3 py-1 mb-2">
@@ -70,7 +72,7 @@ function ActiveBet({ activeBet }) {
                     </div>
                 </div>
             </div>
-        </div>
+        </Card>
     );
 }
 

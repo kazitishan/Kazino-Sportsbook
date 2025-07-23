@@ -1,5 +1,6 @@
 "use client"
 import { useState, useEffect } from 'react';
+import Card from './Card';
 
 function Match({ match }) {
     const [selectedOdd, setSelectedOdd] = useState(null);
@@ -31,7 +32,7 @@ function Match({ match }) {
     const isBetReady = selectedOdd && wagerAmount;
 
     return (
-        <div className="flex flex-col mb-4 p-6 bg-white shadow-lg hover:shadow-xl border border-gray-200 rounded-2xl transition-all duration-300 hover:scale-[1.02]">
+        <Card>
             <div className="flex items-center">
                 <div 
                     data-match-link={match.matchLink}
@@ -109,7 +110,7 @@ function Match({ match }) {
                     </div>
                 </div>
             </div>
-        </div>
+        </Card>
     );
 }
 

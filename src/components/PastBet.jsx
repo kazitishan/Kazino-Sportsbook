@@ -1,10 +1,12 @@
+import Card from "./Card";
+
 function PastBet({ pastBet }) {
     const isWin = pastBet.chosenResult == pastBet.actualResult;
     const oddsTypes = ["HOME", "DRAW", "AWAY"];
     const netColor = isWin ? "text-[#09C285]" : "text-red-500";
 
     return (
-        <div className="flex flex-col mb-4 p-6 bg-white shadow-lg hover:shadow-xl border border-gray-200 rounded-2xl transition-all duration-300 hover:scale-[1.02]">
+        <Card>
             <div className="flex items-center">
                 <div className="text-center w-1/4 flex flex-col justify-center space-y-2">
                     <div className="bg-gray-100 rounded-lg px-3 py-1 mb-2">
@@ -74,7 +76,7 @@ function PastBet({ pastBet }) {
                     </div>
                 </div>
             </div>
-        </div>
+        </Card>
     );
 }
 
