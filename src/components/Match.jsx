@@ -50,11 +50,11 @@ function Match({ match }) {
                     {oddsTypes.map((oddType, index) => (
                         <button 
                             key={oddType}
-                            className={`w-1/3 h-28 flex flex-col items-center justify-center border-2 ${
+                            className={`w-1/3 flex flex-col items-center justify-center border-2 ${
                                 selectedOdd === oddType 
                                     ? 'border-[#09C285] bg-[#effbf6] text-[#09C285]' 
                                     : 'border-gray-200 bg-white text-gray-700'
-                            } rounded-2xl px-4 py-3 font-semibold text-lg`}
+                            } rounded-2xl p-4 font-semibold text-lg`}
                             onClick={() => handleOddSelection(oddType)}
                         >
                             <div className={`text-xs mb-1 ${

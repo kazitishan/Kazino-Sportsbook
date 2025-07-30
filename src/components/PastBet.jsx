@@ -44,7 +44,7 @@ function PastBet({ pastBet }) {
                         return (
                             <div 
                                 key={oddType}
-                                className={`w-1/3 h-28 flex flex-col items-center justify-center border-2 ${boxStyle} rounded-2xl px-4 py-3 font-semibold text-lg`}
+                                className={`w-1/3 flex flex-col items-center justify-center border-2 ${boxStyle} rounded-2xl p-4 font-semibold text-lg`}
                             >
                                 <div className={`text-xs mb-1 ${textStyle}`}>{oddType}</div>
                                 {pastBet.odds[index]}

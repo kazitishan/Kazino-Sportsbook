@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
         <NavBar/>
         <div className='flex'>
           <CompetitionsSidebar/>
-          <div className="max-w-6xl mx-auto">
+          <div className="mx-auto">
             {children}
           </div>
         </div>
