@@ -3,7 +3,7 @@ import Card from "./Card";
 function PastBet({ pastBet }) {
     const isWin = pastBet.chosenResult === pastBet.actualResult;
     const oddsTypes = ["HOME", "DRAW", "AWAY"];
-    const netColor = isWin ? "text-[#09C285]" : "text-red-500";
+    const netColor = isWin ? "text-[#267A54]" : "text-red-500";
 
     return (
         <Card className="w-full">
@@ -31,14 +31,14 @@ function PastBet({ pastBet }) {
                         let textStyle = 'text-gray-500';
                         
                         if (isChosen && isActual) {
-                            boxStyle = 'border-[#09C285] bg-[#effbf6] text-[#09C285]';
-                            textStyle = 'text-[#09C285]';
+                            boxStyle = 'border-[#267A54] bg-green-50 text-[#267A54]';
+                            textStyle = 'text-[#267A54]';
                         } else if (isChosen && !isWin) {
                             boxStyle = 'border-red-500 bg-red-50 text-red-500';
                             textStyle = 'text-red-500';
                         } else if (isActual && !isWin) {
-                            boxStyle = 'border-[#09C285] bg-[#effbf6] text-[#09C285]';
-                            textStyle = 'text-[#09C285]';
+                            boxStyle = 'border-[#267A54] bg-green-50 text-[#267A54]';
+                            textStyle = 'text-[#267A54]';
                         }
 
                         return (

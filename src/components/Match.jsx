@@ -52,13 +52,13 @@ function Match({ match }) {
                             key={oddType}
                             className={`w-1/3 flex flex-col items-center justify-center border-2 ${
                                 selectedOdd === oddType 
-                                    ? 'border-[#09C285] bg-[#effbf6] text-[#09C285]' 
-                                    : 'border-gray-200 bg-white text-gray-700'
+                                    ? 'border-[#267A54] bg-green-50 text-[#267A54]' 
+                                    : 'border-gray-200 text-gray-700'
                             } rounded-2xl p-4 font-semibold text-lg`}
                             onClick={() => handleOddSelection(oddType)}
                         >
                             <div className={`text-xs mb-1 ${
-                                selectedOdd === oddType ? 'text-[#09C285]' : 'text-gray-500'
+                                selectedOdd === oddType ? 'text-[#267A54]' : 'text-gray-500'
                             }`}>{oddType}</div>
                             {match.odds[index]}
                         </button>
@@ -92,7 +92,7 @@ function Match({ match }) {
                     <div className="w-1/3">
                         <button 
                             className={`w-full text-white text-sm font-semibold py-2 px-4 rounded-lg transition-colors duration-300 ${
-                                isBetReady ? 'bg-[#09C285] hover:bg-[#07a572]' : 'bg-gray-400 cursor-not-allowed'
+                                isBetReady ? 'bg-[#267A54] hover:bg-[#1E5A3D]' : 'bg-gray-400 cursor-not-allowed'
                             }`}
                             disabled={!isBetReady}
                         >

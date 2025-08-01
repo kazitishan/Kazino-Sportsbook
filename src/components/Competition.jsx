@@ -7,20 +7,20 @@ async function Competition({ name }) {
         
         if (!matches || !matches.matches || matches.matches.length === 0) {
             return (
-                <div className="flex items-center p-6">
+                <div className="flex items-center p-6 bg-gray-300 rounded-3xl m-4">
                     <img src={`/competitions/${name}.svg`} className="w-8 h-8" />
                     <h1 className="text-xl font-bold mx-6">{matches?.competition || name}</h1>
-                    <div className="font-bold text-red-500">No matches found</div>
+                    <div className="bg-gray-400 text-white text-sm font-medium px-3 py-1 rounded-full">0</div>
                 </div>
             );
         }
 
         return (
             <div className="my-4">
-                <div className="flex items-center p-6 bg-gray-300 rounded-3xl ">
+                <div className="flex items-center p-6 bg-gray-300 rounded-3xl mx-4">
                     <img src={`/competitions/${name}.svg`} className="w-8 h-8" />
                     <h1 className="text-xl font-bold mx-6">{matches.competition}</h1>
-                    <div className="border-1 border-[#09C285] bg-[#effbf6] text-[#09C285] text-sm font-medium px-3 py-1 rounded-full">
+                    <div className="bg-gray-400 text-white text-sm font-medium px-3 py-1 rounded-full">
                         {matches.matches.length}
                     </div>
 

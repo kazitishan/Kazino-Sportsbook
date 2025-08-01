@@ -2,7 +2,7 @@ import Link from "next/link";
 
 function NavBar() {
     return (
-        <nav className="p-4 flex justify-between bg-[#000000] h-[66px]">
+        <nav className="p-4 flex justify-between bg-[#014421] h-[66px]">
             <div className="flex items-center gap-10">
                 <Link href="/" className="flex items-center">
                     <img src="/logo.png" alt="Kazino Sportsbook Logo" className="w-[115px]" />
@@ -22,8 +22,8 @@ function NavBar() {
             </div>
 
             <div className="flex items-center gap-6">
-                <p className="text-[#09C285] font-medium text-sm">$100</p>
-                <button className="bg-[#09C285] text-white text-sm font-semibold px-4 py-2 rounded hover:bg-[#07a875] transition-colors">
+                <p className="text-white font-medium text-sm">$100</p>
+                <button className="bg-[#267A54] text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-[#1E5A3D] transition-colors">
                     Log Out
                 </button>
             </div>

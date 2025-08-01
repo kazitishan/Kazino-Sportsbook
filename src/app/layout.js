@@ -12,7 +12,7 @@ export const metadata = {
   title: "Kazino Sportsbook",
   description: "Bet on real games without suffering the consequences",
   icons: {
-    icon: '/logo.png'
+    icon: '/tab-logo.png'
   }
 };
 
@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
         <NavBar/>
         <div className='flex'>
           <CompetitionsSidebar/>
-          <div className="mx-auto">
+          <div className="w-full">
             {children}
           </div>
         </div>

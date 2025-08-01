@@ -26,12 +26,12 @@ function ActiveBet({ activeBet }) {
                             key={oddType}
                             className={`w-1/3 flex flex-col items-center justify-center border-2 ${
                                 activeBet.chosenResult === oddType 
-                                    ? 'border-[#09C285] bg-[#effbf6] text-[#09C285]' 
-                                    : 'border-gray-200 bg-white text-gray-700'
+                                    ? 'border-[#267A54] bg-green-50 text-[#267A54]' 
+                                    : 'border-gray-200 text-gray-700'
                             } rounded-2xl p-4 font-semibold text-lg`}
                         >
                             <div className={`text-xs mb-1 ${
-                                activeBet.chosenResult === oddType ? 'text-[#09C285]' : 'text-gray-500'
+                                activeBet.chosenResult === oddType ? 'text-[#267A54]' : 'text-gray-500'
                             }`}>{oddType}</div>
                             {activeBet.odds[index]}
                         </div>
