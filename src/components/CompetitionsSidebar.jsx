@@ -5,7 +5,7 @@ import Image from 'next/image';
 import competitionsData from '../competitions.json';
 import Link from "next/link";
 
-const CompetitionsSidebar = () => {
+const CompetitionsSidebar = ({ onLinkClick, isMobile = false }) => {
     const [expandedSections, setExpandedSections] = useState(new Set());
 
     const toggleSection = (country) => {
@@ -22,13 +22,19 @@ const CompetitionsSidebar = () => {
         return country.charAt(0).toUpperCase() + country.slice(1);
     };
 
+    const handleCompetitionClick = () => {
+        if (isMobile && onLinkClick) {
+            onLinkClick();
+        }
+    };
+
     return (
-        <div className="w-80 h-screen p-4 space-y-2">
+        <div className="w-80 h-screen p-4 space-y-2 bg-white border-r border-gray-200">
             {Object.entries(competitionsData).map(([country, competitions]) => (
                 <div key={country} className="last:border-b-0">
                     <button
                         onClick={() => toggleSection(country)}
-                        className="w-full flex items-center justify-between p-3 hover:bg-gray-300 transition-colors duration-200 rounded-lg"
+                        className="w-full flex items-center justify-between p-3 hover:bg-gray-100 transition-colors duration-200 rounded-lg"
                     >
                         <div className="flex items-center space-x-3">
                             <div className="w-6 h-6 relative overflow-hidden rounded-sm flex items-center justify-center">
@@ -68,8 +74,9 @@ const CompetitionsSidebar = () => {
                             {competitions.map((competition) => (
                                 <Link
                                     key={competition}
-                                    className="w-full flex items-center space-x-3 p-2 hover:bg-gray-300 rounded-md transition-colors duration-200 text-left"
-                                    href={`/${competition.replace(/\s+/g, '-')}`} 
+                                    className="w-full flex items-center space-x-3 p-2 hover:bg-gray-100 rounded-md transition-colors duration-200 text-left"
+                                    href={`/${competition.replace(/\s+/g, '-')}`}
+                                    onClick={handleCompetitionClick}
                                 >
                                     <div className="w-6 h-6 relative rounded-sm flex items-center justify-center flex-shrink-0">
                                         <Image

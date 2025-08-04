@@ -22,7 +22,9 @@ export default function RootLayout({ children }) {
       <body className="antialiased">
         <NavBar/>
         <div className='flex'>
-          <CompetitionsSidebar/>
+          <div className="hidden lg:block">
+            <CompetitionsSidebar/>
+          </div>
           <div className="w-full">
             {children}
           </div>
