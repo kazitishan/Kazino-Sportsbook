@@ -1,5 +1,5 @@
 import Match from "./Match";
-import { getMatchesByCompetition } from "@/app/utils/matches";
+import { getMatchesByCompetition } from "@/utils/matches";
 
 async function Competition({ name }) {
     try {

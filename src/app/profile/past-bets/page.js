@@ -1,4 +1,4 @@
-import { getResult } from "@/app/utils/result";
+import { getResult } from "@/utils/result";
 import PastBet from "@/components/PastBet";
 
 export default function DisplayPastBets() {
