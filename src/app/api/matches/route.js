@@ -6,10 +6,20 @@ export async function GET(request) {
         if (competition){
             const res = await fetch(`http://localhost:8080/matches/${encodeURIComponent(competition)}`);
             const data = await res.json();
+            
+            if (!res.ok) {
+                return Response.json(data, { status: res.status });
+            }
+            
             return Response.json(data);
         } else {
             const res = await fetch('http://localhost:8080/matches');
             const data = await res.json();
+            
+            if (!res.ok) {
+                return Response.json(data, { status: res.status });
+            }
+            
             return Response.json(data); 
         }
     } catch (error){
