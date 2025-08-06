@@ -30,17 +30,17 @@ function NavBar() {
                 </Link>
                 
                 {/* Navigation Links */}
-                <div className="hidden lg:flex gap-8">
-                    <Link href="/" className="text-white text-sm font-medium">
-                        Home
-                    </Link>
-                    <Link href="/profile/active-bets" className="text-white text-sm font-medium">
-                        Active Bets
-                    </Link>
-                    <Link href="/profile/past-bets" className="text-white text-sm font-medium">
-                        Past Bets
-                    </Link>
-                </div>
+                                    <div className="hidden lg:flex gap-8">
+                        <Link href="/" className="text-white text-sm font-medium">
+                            Home
+                        </Link>
+                        <Link href="/active-bets" className="text-white text-sm font-medium">
+                            Active Bets
+                        </Link>
+                        <Link href="/past-bets" className="text-white text-sm font-medium">
+                            Past Bets
+                        </Link>
+                    </div>
             </div>
 
             <div className="flex items-center gap-6">

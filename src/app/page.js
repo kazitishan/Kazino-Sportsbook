@@ -1,4 +1,4 @@
-import Competition from "@/components/Competition";
+import MatchesContainer from "@/components/MatchesContainer";
 import { getAllMatches } from "@/utils/matches";
 
 export default async function Home() {
@@ -9,13 +9,13 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col p-4 gap-1">
-      {competitionsWithMatches.map(compObj => (
-        <Competition
-          key={compObj.competition}
-          name={compObj.competition}
-          matches={compObj.matches}
-        />
-      ))}
+                {competitionsWithMatches.map(compObj => (
+            <MatchesContainer
+              key={compObj.competition}
+              name={compObj.competition}
+              matches={compObj.matches}
+            />
+          ))}
     </div>
   );
 }

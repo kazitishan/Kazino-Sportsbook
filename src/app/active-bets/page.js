@@ -1,7 +1,7 @@
-import ActiveBet from "@/components/ActiveBet";
+import MatchesContainer from "@/components/MatchesContainer";
 
 export default function DisplayActiveBets() {
-  const exampleBets = [
+  const activeBets = [
     {
       competition: "UEFA Super Cup",
       dateTime: "08/13/2025 15:00 EST",
@@ -39,12 +39,7 @@ export default function DisplayActiveBets() {
   
   return (
     <div className="p-4">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800">Active Bets</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {exampleBets.map((bet, index) => (
-          <ActiveBet key={`active-bet-${index}`} activeBet={bet} />
-        ))}
-      </div>
+      <MatchesContainer name="Active Bets" matches={activeBets} type="active-bets" />
     </div>
   );
 }

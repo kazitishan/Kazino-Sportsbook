@@ -1,4 +1,4 @@
-import Competition from "@/components/Competition";
+import MatchesContainer from "@/components/MatchesContainer";
 import { getMatchesByCompetition } from "@/utils/matches";
 
 export async function generateMetadata({ params }) {
@@ -34,10 +34,10 @@ export default async function CompetitionDetails({ params }) {
     
     return (
       <div className="p-4">
-        <Competition 
-          name={matchesData?.competition || competitionName} 
-          matches={matchesData?.matches || []} 
-        />
+              <MatchesContainer 
+        name={matchesData?.competition || competitionName} 
+        matches={matchesData?.matches || []} 
+      />
       </div>
     );
   } catch (error) {

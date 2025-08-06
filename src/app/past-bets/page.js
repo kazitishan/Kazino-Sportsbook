@@ -1,5 +1,4 @@
-import { getResult } from "@/utils/result";
-import PastBet from "@/components/PastBet";
+import MatchesContainer from "@/components/MatchesContainer";
 
 export default function DisplayPastBets() {
   const pastBets = [
@@ -43,12 +42,7 @@ export default function DisplayPastBets() {
   
   return (
     <div className="p-4">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800">Past Bets</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {pastBets.map((bet, index) => (
-          <PastBet key={`past-bet-${index}`} pastBet={bet} />
-        ))}
-      </div>
+      <MatchesContainer name="Past Bets" matches={pastBets} type="past-bets" />
     </div>
   );
 }

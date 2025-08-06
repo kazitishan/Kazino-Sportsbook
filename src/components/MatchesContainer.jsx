@@ -2,8 +2,10 @@
 
 import { useState } from "react";
 import Match from "./Match";
+import ActiveBet from "./ActiveBet";
+import PastBet from "./PastBet";
 
-function Competition({ name, matches = [] }) {
+function MatchesContainer({ name, matches = [], type = "matches" }) {
     const [isExpanded, setIsExpanded] = useState(true);
 
     const toggleExpanded = () => {
@@ -55,13 +57,20 @@ function Competition({ name, matches = [] }) {
                 isExpanded ? 'opacity-100' : 'max-h-0 opacity-0'
             }`}>
                 <div className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {matches.map((match, index) => (
-                        <Match key={`${name}-${index}`} match={match} />
-                    ))}
+                    {matches.map((item, index) => {
+                        switch (type) {
+                            case "active-bets":
+                                return <ActiveBet key={`${name}-${index}`} activeBet={item} />;
+                            case "past-bets":
+                                return <PastBet key={`${name}-${index}`} pastBet={item} />;
+                            default:
+                                return <Match key={`${name}-${index}`} match={item} />;
+                        }
+                    })}
                 </div>
             </div>
         </>
     );
 }
 
-export default Competition;
+export default MatchesContainer;
