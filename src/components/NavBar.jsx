@@ -3,12 +3,18 @@
 import Link from "next/link";
 import { useState } from "react";
 import HamburgerMenu from "./HamburgerMenu";
+import { useAuth } from "@/contexts/AuthContext";
 
 function NavBar() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const { user, signOut } = useAuth();
 
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
+    };
+
+    const handleSignOut = async () => {
+        await signOut();
     };
 
     return (
@@ -46,9 +52,21 @@ function NavBar() {
             <div className="flex items-center gap-6">
                 <p className="text-white font-medium text-sm">$100</p>
                 
-                <button className="bg-[#267A54] text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-[#1E5A3D] transition-colors">
-                    Log Out
-                </button>
+                {user ? (
+                    <button 
+                        onClick={handleSignOut}
+                        className="bg-[#267A54] text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-[#1E5A3D] transition-colors"
+                    >
+                        Log Out
+                    </button>
+                ) : (
+                    <Link 
+                        href="/login"
+                        className="bg-[#267A54] text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-[#1E5A3D] transition-colors"
+                    >
+                        Log In
+                    </Link>
+                )}
             </div>
         </nav>
 
