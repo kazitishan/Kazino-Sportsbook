@@ -7,7 +7,7 @@ function PastBet({ pastBet }) {
 
     return (
         <Card className="w-full">
-            <div data-match-link={pastBet.link} className="w-full flex flex-col items-center gap-2">
+            <div data-match-link={pastBet.matchLink} className="w-full flex flex-col items-center gap-2">
                 {/* HOME VS AWAY */}
                 <div className='flex'>
                     <p className="font-semibold text-lg text-gray-800">{pastBet.homeTeam}</p>

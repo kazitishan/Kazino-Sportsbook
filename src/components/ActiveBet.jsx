@@ -5,7 +5,7 @@ function ActiveBet({ activeBet }) {
 
     return (
         <Card>
-            <div data-match-link={activeBet.link} className="w-full flex flex-col items-center gap-2">
+            <div data-match-link={activeBet.matchLink} className="w-full flex flex-col items-center gap-2">
                 {/* HOME VS AWAY */}
                 <div className='flex'>
                     <p className="font-semibold text-lg text-gray-800">{activeBet.homeTeam}</p>

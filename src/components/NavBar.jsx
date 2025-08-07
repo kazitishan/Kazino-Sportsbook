@@ -1,12 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import HamburgerMenu from "./HamburgerMenu";
 import { useAuth } from "@/contexts/AuthContext";
+import { bettingService } from "@/services/bettingService";
 
 function NavBar() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [userBalance, setUserBalance] = useState(null);
     const { user, signOut } = useAuth();
 
     const toggleMobileMenu = () => {
@@ -17,9 +19,26 @@ function NavBar() {
         await signOut();
     };
 
+    useEffect(() => {
+        if (user) {
+            loadUserBalance();
+        } else {
+            setUserBalance(null);
+        }
+    }, [user]);
+
+    const loadUserBalance = async () => {
+        try {
+            const balance = await bettingService.getUserBalance(user.id);
+            setUserBalance(balance);
+        } catch (error) {
+            console.error('Error loading user balance:', error);
+        }
+    };
+
     return (
         <>
-                    <nav className="p-4 flex justify-between bg-[#014421] h-[66px]">
+                                            <nav className="p-4 flex justify-between bg-[#014421] h-[66px] sticky top-0 z-50">
             <div className="flex items-center gap-4">
                 {/* Hamburger Menu Button */}
                 <button 
@@ -49,8 +68,12 @@ function NavBar() {
                     </div>
             </div>
 
-            <div className="flex items-center gap-6">
-                <p className="text-white font-medium text-sm">$100</p>
+                                        <div className="flex items-center gap-6">
+                                {user && userBalance !== null && (
+                                    <p className="text-white font-medium text-sm">
+                                        ${userBalance.toFixed(2)}
+                                    </p>
+                                )}
                 
                 {user ? (
                     <button 
