@@ -2,32 +2,7 @@ import { supabase } from '@/lib/supabase';
 import { getResult } from '@/utils/result';
 
 export const bettingService = {
-  // Test function to check if place_bet function exists
-  async testFunction() {
-    try {
-      const { data, error } = await supabase
-        .rpc('place_bet', {
-          p_user_id: '00000000-0000-0000-0000-000000000000',
-          p_competition: 'test',
-          p_date_time: 'test',
-          p_home_team: 'test',
-          p_away_team: 'test',
-          p_odds: ['1.0', '1.0', '1.0'],
-          p_wager: 1.0,
-          p_chosen_result: 'HOME',
-          p_net_payout: 1.0,
-          p_match_link: 'test'
-        });
-      
-      console.log('Function test result:', { data, error });
-      return { data, error };
-    } catch (err) {
-      console.error('Function test error:', err);
-      return { error: err };
-    }
-  },
-
-  // Get user's current balance
+  // Get user's current balance from the database
   async getUserBalance(userId) {
     const { data, error } = await supabase
       .from('user_profiles')
@@ -43,7 +18,7 @@ export const bettingService = {
     return data.balance;
   },
 
-  // Check if user has already bet on a specific match
+  // Check if user has already placed a bet on a specific match
   async hasExistingBet(userId, matchLink) {
     const { data, error } = await supabase
       .from('active_bets')
@@ -55,7 +30,7 @@ export const bettingService = {
     return !error && data;
   },
 
-  // Place a bet using the PostgreSQL function
+  // Place a new bet and deduct wager from user's balance
   async placeBet(betData) {
     try {
       console.log('Placing bet with data:', betData);
@@ -120,7 +95,7 @@ export const bettingService = {
     }
   },
 
-  // Get user's active bets
+  // Get all active bets for a user
   async getActiveBets(userId) {
     const { data, error } = await supabase
       .from('active_bets')
@@ -147,7 +122,7 @@ export const bettingService = {
     }));
   },
 
-  // Get user's past bets
+  // Get all past bets for a user with formatted payout display
   async getPastBets(userId) {
     const { data, error } = await supabase
       .from('past_bets')
@@ -170,12 +145,12 @@ export const bettingService = {
       actualResult: bet.actual_result,
       wager: `$${bet.wager}`,
       chosenResult: bet.chosen_result,
-      netPayout: `$${bet.net_payout}`,
+      netPayout: bet.net_payout >= 0 ? `$${bet.net_payout}` : `-$${Math.abs(bet.net_payout)}`,
       matchLink: bet.match_link
     }));
   },
 
-  // Settle all active bets for a user
+  // Settle all active bets by checking match results and moving to past bets
   async settleBets(userId) {
     try {
       // Get all active bets in reverse order (oldest first)
@@ -208,10 +183,11 @@ export const bettingService = {
           // Determine if the bet was won or lost
           const betWon = bet.chosen_result === result;
           
-          // Calculate payout (if won, pay the net_payout; if lost, pay 0)
-          const payout = betWon ? bet.net_payout : 0;
+          // Calculate payout (if won, pay the net_payout; if lost, pay negative wager amount)
+          const payout = betWon ? bet.net_payout : -bet.wager;
+          const finalPayout = betWon ? bet.net_payout : -bet.wager;
 
-          // Move bet to past_bets table
+          // Move bet to past_bets table with correct payout
           const { error: insertError } = await supabase
             .from('past_bets')
             .insert({
@@ -223,7 +199,7 @@ export const bettingService = {
               odds: bet.odds,
               wager: bet.wager,
               chosen_result: bet.chosen_result,
-              net_payout: bet.net_payout,
+              net_payout: finalPayout, // Use the calculated payout (positive for wins, negative for losses)
               actual_result: result,
               match_link: bet.match_link
             });
@@ -246,7 +222,7 @@ export const bettingService = {
             continue;
           }
 
-          // Update user balance if bet was won
+          // Update user balance (only for winning bets - losing bets already had wager deducted when placed)
           if (betWon) {
             const currentBalance = await this.getUserBalance(userId);
             if (currentBalance !== null) {
