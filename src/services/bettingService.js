@@ -168,23 +168,20 @@ export const bettingService = {
       let settledCount = 0;
       const errors = [];
 
-      // Process each bet
       for (const bet of activeBets) {
         try {
-          // Get the match result
+          const betDateTime = new Date(bet.date_time);
+          const currentTime = new Date();
+
+          if (betDateTime > currentTime) { continue; }
+
           const result = await getResult(bet.match_link);
           
-          // Check if the match can be settled
-          if (result === "Match is still being played" || result === "Match not played yet") {
-            // Skip this bet - it can't be settled yet
-            continue;
-          }
+          if (result === "Match is still being played" || result === "Match not played yet") { continue; }
 
-          // Determine if the bet was won or lost
           const betWon = bet.chosen_result === result;
           
-          // Calculate payout (if won, pay the net_payout; if lost, pay negative wager amount)
-          const payout = betWon ? bet.net_payout : -bet.wager;
+          const payout = betWon ? bet.net_payout + bet.wager : -bet.wager;
           const finalPayout = betWon ? bet.net_payout : -bet.wager;
 
           // Move bet to past_bets table with correct payout
@@ -199,7 +196,7 @@ export const bettingService = {
               odds: bet.odds,
               wager: bet.wager,
               chosen_result: bet.chosen_result,
-              net_payout: finalPayout, // Use the calculated payout (positive for wins, negative for losses)
+              net_payout: finalPayout,
               actual_result: result,
               match_link: bet.match_link
             });
@@ -222,7 +219,7 @@ export const bettingService = {
             continue;
           }
 
-          // Update user balance (only for winning bets - losing bets already had wager deducted when placed)
+          // Update user balance
           if (betWon) {
             const currentBalance = await this.getUserBalance(userId);
             if (currentBalance !== null) {
