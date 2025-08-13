@@ -16,3 +16,11 @@ export async function getAllMatches() {
     }
     return res.json();
 }
+
+export async function getMatchesByDate(date) {
+    const res = await fetch(`http://localhost:3000/api/matches?date=${encodeURIComponent(date)}`);
+    if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+    }
+    return res.json();
+}
