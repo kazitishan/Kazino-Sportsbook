@@ -141,8 +141,10 @@ function Match({ match }) {
                     <div className="flex items-center gap-3 w-full">
                         {/* WAGER */}
                         <div className="w-1/3">
-                            <label className="block text-xs font-medium text-gray-500 mb-1">Wager ($)</label>
+                            <label htmlFor={`wager-${match.matchLink}`} className="block text-xs font-medium text-gray-500 mb-1">Wager ($)</label>
                             <input
+                                id={`wager-${match.matchLink}`}
+                                name={`wager-${match.matchLink}`}
                                 type="text"
                                 inputMode="decimal"
                                 className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#09C285] focus:border-transparent"
@@ -155,7 +157,7 @@ function Match({ match }) {
 
                         {/* NET PAYOUT */}
                         <div className="w-1/3">
-                            <label className="block text-xs font-medium text-gray-500 mb-1">Net Payout</label>
+                            <p className="block text-xs font-medium text-gray-500 mb-1">Net Payout</p>
                             <div className="text-sm font-semibold text-gray-900 overflow-scroll">
                                 {netPayout}
                             </div>

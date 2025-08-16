@@ -25,9 +25,9 @@ export const bettingService = {
       .select('id')
       .eq('user_id', userId)
       .eq('match_link', matchLink)
-      .single();
+      .maybeSingle();
 
-    return !error && data;
+    return !!data;
   },
 
   // Place a new bet and deduct wager from user's balance
