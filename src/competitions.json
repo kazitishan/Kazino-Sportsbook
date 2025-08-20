@@ -10,8 +10,9 @@
         "FIFA Club World Cup",
         "Club Friendlies"
     ],
-    "CONMEBOL": [
-        "Copa America"
+    "South America": [
+        "Copa America",
+        "Copa Libertadores"
     ],
     "england": [
         "Premier League",
@@ -22,7 +23,7 @@
     ],
     "spain": [
         "La Liga",
-        "Supercopa de España",
+        "Spanish Super Cup",
         "Copa del Rey"
     ],
     "germany": [
@@ -39,5 +40,14 @@
         "Ligue 1",
         "Coupe de France",
         "French Super Cup"
+    ],
+    "netherlands": [
+        "Eredivisie"
+    ],
+    "portugal": [
+        "Liga Nos"
+    ],
+    "turkey": [
+        "Super Lig"
     ]
 }
