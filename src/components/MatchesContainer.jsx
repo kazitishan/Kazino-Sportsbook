@@ -64,7 +64,7 @@ function MatchesContainer({ name, matches = [], type = "matches" }) {
                             case "settled":
                                 return <SettledBet key={`${name}-${index}`} settledBet={item} />;
                             default:
-                                return <Match key={`${name}-${index}`} match={item} />;
+                                return <Match key={`${name}-${index}`} match={item} competition={name} />;
                         }
                     })}
                 </div>

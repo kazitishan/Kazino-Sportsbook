@@ -6,6 +6,13 @@ function ActiveBet({ activeBet }) {
     return (
         <Card>
             <div data-match-link={activeBet.matchLink} className="w-full flex flex-col items-center gap-2">
+
+                {/* COMPETITION */}
+                <div className="flex items-center gap-2">
+                    <img src={`/competitions/${activeBet.competition}.svg`} className="w-5 h-5" alt={activeBet.competition} />
+                    <p className="text-sm font-medium text-gray-600">{activeBet.competition}</p>
+                </div>
+
                 {/* HOME VS AWAY */}
                 <div className='flex'>
                     <p className="font-semibold text-lg text-gray-800">{activeBet.homeTeam}</p>
@@ -15,9 +22,6 @@ function ActiveBet({ activeBet }) {
 
                 {/* DATE */}
                 <p className="text-sm">{activeBet.dateTime}</p>
-
-                {/* COMPETITION */}
-                <p className="text-sm">{activeBet.competition}</p>
                 
                 {/* ODDS BUTTONS */}
                 <div className="w-full flex gap-3 h-full">

@@ -7,20 +7,17 @@ function DateNavigator() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const [currentDate, setCurrentDate] = useState(new Date());
-    const [displayText, setDisplayText] = useState('All Matches');
-    const [isAllMatches, setIsAllMatches] = useState(true);
+    const [displayText, setDisplayText] = useState('Today');
 
     useEffect(() => {
         const dateParam = searchParams.get('date');
         if (dateParam) {
             const date = new Date(dateParam);
             setCurrentDate(date);
-            setIsAllMatches(false);
             updateDisplayText(date);
         } else {
             setCurrentDate(new Date());
-            setIsAllMatches(true);
-            setDisplayText('All Matches');
+            setDisplayText('Today');
         }
     }, [searchParams]);
 
@@ -39,7 +36,7 @@ function DateNavigator() {
         } else if (dateOnly.getTime() === tomorrowOnly.getTime()) {
             setDisplayText('Tomorrow');
         } else {
-            const options = { month: 'short', day: 'numeric', year: 'numeric' };
+            const options = { weekday: 'short', month: 'short', day: 'numeric' };
             setDisplayText(date.toLocaleDateString('en-US', options));
         }
     };
@@ -54,17 +51,6 @@ function DateNavigator() {
     };
 
     const goBack = () => {
-        if (isAllMatches) {
-            // Can't go back from All Matches
-            return;
-        }
-        
-        if (isToday()) {
-            // From Today, go back to All Matches
-            router.push('/');
-            return;
-        }
-        
         const newDate = new Date(currentDate);
         newDate.setDate(newDate.getDate() - 1);
         
@@ -79,21 +65,12 @@ function DateNavigator() {
     };
 
     const goForward = () => {
-        if (isAllMatches) {
-            // From All Matches, go to Today
-            const today = new Date();
-            navigateToDate(today);
-        } else {
-            // From a specific date, go to next day
-            const newDate = new Date(currentDate);
-            newDate.setDate(newDate.getDate() + 1);
-            navigateToDate(newDate);
-        }
+        const newDate = new Date(currentDate);
+        newDate.setDate(newDate.getDate() + 1);
+        navigateToDate(newDate);
     };
 
     const isToday = () => {
-        if (isAllMatches) return false;
-        
         const today = new Date();
         const todayOnly = new Date(today.getFullYear(), today.getMonth(), today.getDate());
         const currentDateOnly = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
@@ -106,9 +83,9 @@ function DateNavigator() {
                 {/* Back Arrow */}
                 <button
                     onClick={goBack}
-                    disabled={isAllMatches}
+                    disabled={isToday()}
                     className={`p-2 rounded-full transition-colors ${
-                        isAllMatches
+                        isToday()
                             ? 'text-gray-300 cursor-not-allowed' 
                             : 'text-gray-600 hover:bg-gray-100'
                     }`}

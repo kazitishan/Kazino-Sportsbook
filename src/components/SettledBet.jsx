@@ -8,6 +8,13 @@ function SettledBet({ settledBet }) {
     return (
         <Card className="w-full">
             <div data-match-link={settledBet.matchLink} className="w-full flex flex-col items-center gap-2">
+
+                {/* COMPETITION */}
+                <div className="flex items-center gap-2">
+                    <img src={`/competitions/${settledBet.competition}.svg`} className="w-5 h-5" alt={settledBet.competition} />
+                    <p className="text-sm font-medium text-gray-600">{settledBet.competition}</p>
+                </div>
+
                 {/* HOME VS AWAY */}
                 <div className='flex'>
                     <p className="font-semibold text-lg text-gray-800">{settledBet.homeTeam}</p>
@@ -17,9 +24,6 @@ function SettledBet({ settledBet }) {
 
                 {/* DATE */}
                 <p className="text-sm">{settledBet.dateTime}</p>
-
-                {/* COMPETITION */}
-                <p className="text-sm">{settledBet.competition}</p>
                 
                 {/* ODDS BUTTONS */}
                 <div className="w-full flex gap-3 h-full">

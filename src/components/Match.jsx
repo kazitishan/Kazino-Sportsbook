@@ -5,7 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { bettingService } from '@/services/bettingService';
 import Toast from './Toast';
 
-function Match({ match }) {
+function Match({ match, competition }) {
     const [selectedOdd, setSelectedOdd] = useState(null);
     const [wagerAmount, setWagerAmount] = useState('');
     const [netPayout, setNetPayout] = useState('$0.00');
@@ -68,7 +68,7 @@ function Match({ match }) {
 
             const result = await bettingService.placeBet({
                 userId: user.id,
-                competition: match.competition || 'Unknown',
+                competition: competition,
                 dateTime: match.dateTime,
                 homeTeam: match.homeTeam,
                 awayTeam: match.awayTeam,
@@ -106,6 +106,12 @@ function Match({ match }) {
         <>
             <Card>
                 <div data-match-link={match.matchLink} className="w-full flex flex-col items-center gap-2">
+
+                    {/* COMPETITION */}
+                    <div className="flex items-center gap-2">
+                        <img src={`/competitions/${competition}.svg`} className="w-5 h-5" alt={competition} />
+                        <p className="text-sm font-medium text-gray-600">{competition}</p>
+                    </div>
 
                     {/* HOME VS AWAY */}
                     <div className='flex'>
