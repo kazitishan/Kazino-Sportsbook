@@ -29,7 +29,7 @@ const CompetitionsSidebar = ({ onLinkClick, isMobile = false }) => {
     };
 
     return (
-        <div className="w-80 h-screen p-4 space-y-2 bg-white border-r border-gray-200">
+        <div className={`w-80 p-4 space-y-2 bg-white ${isMobile ? '' : 'min-h-full'}`}>
             {Object.entries(competitionsData).map(([country, competitions]) => (
                 <div key={country} className="last:border-b-0">
                     <button

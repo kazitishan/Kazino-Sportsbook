@@ -25,7 +25,7 @@ function MatchesContainer({ name, matches = [], type = "matches" }) {
     return (
         <>
             <div 
-                className="flex items-center p-6 bg-white shadow-lg hover:bg-gray-100 rounded-2xl cursor-pointer transition-colors duration-200 border border-gray-100"
+                className="flex items-center p-6 bg-white shadow-lg hover:bg-gray-100 rounded-2xl cursor-pointer transition-colors duration-200"
                 onClick={toggleExpanded}
             >
                 <img src={`/competitions/${name}.svg`} className="w-8 h-8" />
