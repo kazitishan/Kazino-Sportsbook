@@ -5,25 +5,25 @@ import { useAuth } from '@/contexts/AuthContext';
 import { bettingService } from '@/services/bettingService';
 import MatchesContainer from "@/components/MatchesContainer";
 
-export default function DisplayPastBets() {
-  const [pastBets, setPastBets] = useState([]);
+export default function DisplaySettledBets() {
+  const [settledBets, setSettledBets] = useState([]);
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
 
   useEffect(() => {
     if (user) {
-      loadPastBets();
+      loadSettledBets();
     } else {
       setLoading(false);
     }
   }, [user]);
 
-  const loadPastBets = async () => {
+  const loadSettledBets = async () => {
     try {
-      const bets = await bettingService.getPastBets(user.id);
-      setPastBets(bets);
+      const bets = await bettingService.getSettledBets(user.id);
+      setSettledBets(bets);
     } catch (error) {
-      console.error('Error loading past bets:', error);
+      console.error('Error loading settled bets:', error);
     } finally {
       setLoading(false);
     }
@@ -43,7 +43,7 @@ export default function DisplayPastBets() {
     return (
       <div className="p-4">
         <div className="text-center text-gray-600">
-          Please log in to view your past bets.
+          Please log in to view your settled bets.
         </div>
       </div>
     );
@@ -51,7 +51,7 @@ export default function DisplayPastBets() {
   
   return (
     <div className="p-4">
-      <MatchesContainer name="Past Bets" matches={pastBets} type="past-bets" />
+      <MatchesContainer name="Settled" matches={settledBets} type="settled" />
     </div>
   );
 }

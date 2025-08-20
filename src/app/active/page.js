@@ -45,7 +45,9 @@ export default function DisplayActiveBets() {
       if (result.success) {
         if (result.settledCount > 0) {
           showToast(`Successfully settled ${result.settledCount} bets!`, 'success');
-          // Reload active bets to reflect changes
+          // Force a complete refresh of active bets
+          setActiveBets([]); // Clear current bets first
+          await new Promise(resolve => setTimeout(resolve, 500)); // Small delay to ensure DB operations complete
           await loadActiveBets();
         } else {
           showToast('No bets could be settled at this time.', 'info');
@@ -121,7 +123,7 @@ export default function DisplayActiveBets() {
       </div>
 
       {/* Active Bets Container */}
-      <MatchesContainer name="Active Bets" matches={activeBets} type="active-bets" />
+      <MatchesContainer name="Active" matches={activeBets} type="active" />
 
       {/* Toast Notification */}
       <Toast

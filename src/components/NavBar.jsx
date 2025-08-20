@@ -59,11 +59,11 @@ function NavBar() {
                         <Link href="/" className="text-white text-sm font-medium">
                             Home
                         </Link>
-                        <Link href="/active-bets" className="text-white text-sm font-medium">
-                            Active Bets
+                        <Link href="/active" className="text-white text-sm font-medium">
+                            Active
                         </Link>
-                        <Link href="/past-bets" className="text-white text-sm font-medium">
-                            Past Bets
+                        <Link href="/settled" className="text-white text-sm font-medium">
+                            Settled
                         </Link>
                     </div>
             </div>

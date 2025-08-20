@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Match from "./Match";
 import ActiveBet from "./ActiveBet";
-import PastBet from "./PastBet";
+import SettledBet from "./SettledBet";
 
 function MatchesContainer({ name, matches = [], type = "matches" }) {
     const [isExpanded, setIsExpanded] = useState(true);
@@ -59,10 +59,10 @@ function MatchesContainer({ name, matches = [], type = "matches" }) {
                 <div className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {matches.map((item, index) => {
                         switch (type) {
-                            case "active-bets":
+                            case "active":
                                 return <ActiveBet key={`${name}-${index}`} activeBet={item} />;
-                            case "past-bets":
-                                return <PastBet key={`${name}-${index}`} pastBet={item} />;
+                            case "settled":
+                                return <SettledBet key={`${name}-${index}`} settledBet={item} />;
                             default:
                                 return <Match key={`${name}-${index}`} match={item} />;
                         }

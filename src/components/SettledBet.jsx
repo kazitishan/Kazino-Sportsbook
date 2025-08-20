@@ -1,31 +1,31 @@
 import Card from "./Card";
 
-function PastBet({ pastBet }) {
-    const isWin = pastBet.chosenResult === pastBet.actualResult;
+function SettledBet({ settledBet }) {
+    const isWin = settledBet.chosenResult === settledBet.actualResult;
     const oddsTypes = ["HOME", "DRAW", "AWAY"];
     const netColor = isWin ? "text-[#267A54]" : "text-red-500";
 
     return (
         <Card className="w-full">
-            <div data-match-link={pastBet.matchLink} className="w-full flex flex-col items-center gap-2">
+            <div data-match-link={settledBet.matchLink} className="w-full flex flex-col items-center gap-2">
                 {/* HOME VS AWAY */}
                 <div className='flex'>
-                    <p className="font-semibold text-lg text-gray-800">{pastBet.homeTeam}</p>
+                    <p className="font-semibold text-lg text-gray-800">{settledBet.homeTeam}</p>
                     <span className="flex items-center mx-2 text-sm font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded-full">VS</span>
-                    <p className="font-semibold text-lg text-gray-800">{pastBet.awayTeam}</p>
+                    <p className="font-semibold text-lg text-gray-800">{settledBet.awayTeam}</p>
                 </div>
 
                 {/* DATE */}
-                <p className="text-sm">{pastBet.dateTime}</p>
+                <p className="text-sm">{settledBet.dateTime}</p>
 
                 {/* COMPETITION */}
-                <p className="text-sm">{pastBet.competition}</p>
+                <p className="text-sm">{settledBet.competition}</p>
                 
                 {/* ODDS BUTTONS */}
                 <div className="w-full flex gap-3 h-full">
                     {oddsTypes.map((oddType, index) => {
-                        const isChosen = pastBet.chosenResult === oddType;
-                        const isActual = pastBet.actualResult === oddType;
+                        const isChosen = settledBet.chosenResult === oddType;
+                        const isActual = settledBet.actualResult === oddType;
                         
                         let boxStyle = 'border-gray-200 bg-white text-gray-700';
                         let textStyle = 'text-gray-500';
@@ -47,7 +47,7 @@ function PastBet({ pastBet }) {
                                 className={`w-1/3 flex flex-col items-center justify-center border-2 ${boxStyle} rounded-2xl p-4 font-semibold text-lg`}
                             >
                                 <div className={`text-xs mb-1 ${textStyle}`}>{oddType}</div>
-                                {pastBet.odds[index]}
+                                {settledBet.odds[index]}
                             </div>
                         );
                     })}
@@ -59,7 +59,7 @@ function PastBet({ pastBet }) {
                     <div className="w-1/2">
                         <label className="block text-xs font-medium text-gray-500 mb-1">Wager ($)</label>
                         <div className="w-full px-3 py-2 text-sm bg-gray-50 rounded-lg">
-                            {pastBet.wager}
+                            {settledBet.wager}
                         </div>
                     </div>
 
@@ -67,7 +67,7 @@ function PastBet({ pastBet }) {
                     <div className="w-1/2">
                         <label className="block text-xs font-medium text-gray-500 mb-1">Net Payout</label>
                         <div className={`text-sm font-semibold ${netColor}`}>
-                            {pastBet.netPayout}
+                            {settledBet.netPayout}
                         </div>
                     </div>
                 </div>
@@ -76,4 +76,4 @@ function PastBet({ pastBet }) {
     );
 }
 
-export default PastBet;
+export default SettledBet;

@@ -44,20 +44,20 @@ const HamburgerMenu = ({ isOpen, onClose }) => {
                                 Home
                             </Link>
                             <Link 
-                                href="/active-bets" 
+                                href="/active" 
                                 onClick={handleLinkClick}
                                 className="flex items-center p-3 hover:bg-gray-100 rounded-lg transition-colors text-gray-700 font-medium"
                             >
-                                <img src="/competitions/Active Bets.svg" alt="Active Bets" className="w-5 h-5 mr-3" />
-                                Active Bets
+                                <img src="/competitions/Active.svg" alt="Active" className="w-5 h-5 mr-3" />
+                                Active
                             </Link>
                             <Link 
-                                href="/past-bets" 
+                                href="/settled" 
                                 onClick={handleLinkClick}
                                 className="flex items-center p-3 hover:bg-gray-100 rounded-lg transition-colors text-gray-700 font-medium"
                             >
-                                <img src="/competitions/Past Bets.svg" alt="Past Bets" className="w-5 h-5 mr-3" />
-                                Past Bets
+                                <img src="/competitions/Settled.svg" alt="Settled" className="w-5 h-5 mr-3" />
+                                Settled
                             </Link>
                         </div>
                     </div>

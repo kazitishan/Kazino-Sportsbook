@@ -33,8 +33,6 @@ export const bettingService = {
   // Place a new bet and deduct wager from user's balance
   async placeBet(betData) {
     try {
-      console.log('Placing bet with data:', betData);
-      
       // First, check if user has already bet on this match
       const existingBet = await this.hasExistingBet(betData.userId, betData.matchLink);
       if (existingBet) {
@@ -122,8 +120,8 @@ export const bettingService = {
     }));
   },
 
-  // Get all past bets for a user with formatted payout display
-  async getPastBets(userId) {
+  // Get all settled bets for a user with formatted payout display
+  async getSettledBets(userId) {
     const { data, error } = await supabase
       .from('past_bets')
       .select('*')
@@ -131,7 +129,7 @@ export const bettingService = {
       .order('created_at', { ascending: false });
 
     if (error) {
-      console.error('Error fetching past bets:', error);
+      console.error('Error fetching settled bets:', error);
       return [];
     }
 
