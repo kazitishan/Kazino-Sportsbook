@@ -1,24 +1,24 @@
 import MatchesContainer from "@/components/MatchesContainer";
 import DateNavigator from "@/components/DateNavigator";
-import { getMatchesByDate } from "@/utils/matches";
+import { getTodaysMatches, getMatchesByDate } from "@/utils/matches";
 
 export default async function Home({ searchParams }) {
   const params = await searchParams;
   const dateParam = params?.date;
   
-  let targetDate = dateParam;
-  if (!targetDate) {
-    const today = new Date();
-    const month = (today.getMonth() + 1).toString().padStart(2, '0');
-    const day = today.getDate().toString().padStart(2, '0');
-    const year = today.getFullYear();
-    targetDate = `${month}-${day}-${year}`;
+  let allMatches;
+  
+  const today = new Date();
+  const todayFormatted = `${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}-${today.getFullYear()}`;
+  
+  if (dateParam && dateParam !== todayFormatted) {
+    allMatches = await getMatchesByDate(dateParam);
+  } else {
+    allMatches = await getTodaysMatches();
   }
 
-  const allMatches = await getMatchesByDate(targetDate);
-
-  const competitionsWithMatches = Object.values(allMatches).filter(
-    compObj => Array.isArray(compObj.matches) && compObj.matches.length > 0
+  const competitionsWithMatches = allMatches.filter(competition => 
+    competition.matches && Array.isArray(competition.matches) && competition.matches.length > 0
   );
 
   return (

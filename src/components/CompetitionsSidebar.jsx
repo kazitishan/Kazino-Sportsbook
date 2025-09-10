@@ -75,7 +75,7 @@ const CompetitionsSidebar = ({ onLinkClick, isMobile = false }) => {
                                 <Link
                                     key={competition}
                                     className="w-full flex items-center space-x-3 p-2 hover:bg-gray-100 rounded-md transition-colors duration-200 text-left"
-                                    href={`/${competition.replace(/\s+/g, '-')}`}
+                                    href={`/${country.toLowerCase()}/${competition.replace(/\s+/g, '-').toLowerCase()}`}
                                     onClick={handleCompetitionClick}
                                 >
                                     <div className="w-6 h-6 relative rounded-sm flex items-center justify-center flex-shrink-0">
