@@ -1,5 +1,5 @@
 export async function getTodaysMatches() {
-    const res = await fetch('http://localhost:3000/api/matches');
+    const res = await fetch('http://localhost:3000/api/matches?finished=false');
     if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
     }
