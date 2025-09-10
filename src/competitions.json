@@ -1,53 +1,53 @@
 {
-    "europe": [
+    "Europe": [
         "UEFA Nations League",
-        "UCL",
-        "UEL",
-        "UECL",
+        "Champions League",
+        "Europa League",
+        "Conference League",
         "UEFA Super Cup"
     ],
-    "world": [
+    "World": [
         "FIFA Club World Cup",
-        "Club Friendlies"
+        "Club Friendly"
     ],
     "South America": [
         "Copa America",
         "Copa Libertadores"
     ],
-    "england": [
+    "England": [
         "Premier League",
-        "EFL Championship",
+        "Championship",
         "FA Cup",
         "EFL Cup",
-        "Community Shield"
+        "FA Community Shield"
     ],
-    "spain": [
-        "La Liga",
-        "Spanish Super Cup",
+    "Spain": [
+        "LaLiga",
+        "Super Cup",
         "Copa del Rey"
     ],
-    "germany": [
+    "Germany": [
         "Bundesliga",
         "DFB Pokal",
-        "German Super Cup"
+        "Super Cup"
     ],
-    "italy": [
+    "Italy": [
         "Serie A",
         "Coppa Italia",
-        "Supercoppa Italiana"
+        "Super Cup"
     ],
-    "france": [
+    "France": [
         "Ligue 1",
         "Coupe de France",
-        "French Super Cup"
+        "Super Cup"
     ],
-    "netherlands": [
+    "Netherlands": [
         "Eredivisie"
     ],
-    "portugal": [
-        "Liga Nos"
+    "Portugal": [
+        "Liga Portugal"
     ],
-    "turkey": [
+    "Turkey": [
         "Super Lig"
     ]
 }
