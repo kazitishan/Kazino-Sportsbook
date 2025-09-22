@@ -3,12 +3,12 @@
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
 <style type="text/css">
-	.st0{fill-rule:evenodd;clip-rule:evenodd;fill:#FFFFFF;stroke:#DDDDDD;stroke-width:0.25;stroke-miterlimit:10;}
+	.st0{fill-rule:evenodd;clip-rule:evenodd;fill:transparent;stroke:none;}
 	.st1{fill-rule:evenodd;clip-rule:evenodd;fill:#F99500;}
-	.st2{fill-rule:evenodd;clip-rule:evenodd;}
-	.st3{fill-rule:evenodd;clip-rule:evenodd;fill:#6D6E71;}
+	.st2{fill-rule:evenodd;clip-rule:evenodd;fill:#9A9B9C;}
+	.st3{fill-rule:evenodd;clip-rule:evenodd;fill:#FFFFFF;}
 </style>
-<circle class="st0" cx="25.1" cy="25" r="24.7"/>
+<circle class="st0" cx="25.1" cy="25" r="24.7" fill="transparent"/>
 <g>
 	<path class="st1" d="M12.8,9.1c-0.6,0.5-1.2,1.1-1.8,1.8C7.2,14.9,5.1,20,4.9,25.9c0.1,7.3,2.7,13.2,7.4,17.6
 		c1.8,1.4,3.3,2.5,4.7,3.1L17,47.3c-2.7-1.1-5.3-2.8-7.4-4.9c-4.3-4.5-6.5-9.8-6.5-15.9c0-6.2,2.2-11.3,6.5-15.7

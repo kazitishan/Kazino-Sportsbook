@@ -1,82 +1,119 @@
-import Card from "./Card";
+import { Button } from '@/components/ui/button';
 
 function SettledBet({ settledBet }) {
     const isWin = settledBet.chosenResult === settledBet.actualResult;
     const oddsTypes = ["HOME", "DRAW", "AWAY"];
-    const netColor = isWin ? "text-[#267A54]" : "text-red-500";
+    const netColor = isWin ? "text-green-500" : "text-red-500";
+
+    // Format date and time
+    const formatDateTime = (dateTime) => {
+        if (!dateTime || dateTime === 'Date not available') return 'TBD';
+        const match = dateTime.match(/^(\d{2}-\d{2}-\d{4})\s+(.+)$/);
+        if (match) {
+            const [, date, time] = match;
+            const [month, day, year] = date.split('-');
+            const dateObj = new Date(year, month - 1, day);
+            const dayName = dateObj.toLocaleDateString('en-US', { weekday: 'short' });
+            return `${dayName} ${month}/${day} • ${time}`;
+        }
+        return dateTime;
+    };
 
     return (
-        <Card className="w-full">
-            <div data-match-link={settledBet.matchLink} className="w-full flex flex-col items-center gap-2">
-
-                {/* COMPETITION */}
-                <div className="flex items-center gap-2">
-                    <img src={`/competitions/${settledBet.competition}.svg`} className="w-5 h-5" alt={settledBet.competition} />
-                    <p className="text-sm font-medium text-gray-600">{settledBet.competition}</p>
+        <div data-match-link={settledBet.matchLink} className="w-full px-3 py-2 bg-card border border-border rounded-lg">
+            {/* Main Content Row */}
+            <div className="flex items-center justify-between">
+                {/* Left Side - Teams and Time */}
+                <div className="flex-1">
+                    {/* Teams */}
+                    <div className="flex items-center space-x-3 mb-1">
+                        <div className="w-5 h-5 bg-muted rounded-full flex items-center justify-center">
+                            <div className="w-2 h-2 bg-primary rounded-full"></div>
+                        </div>
+                        <span className="font-semibold text-foreground text-sm">{settledBet.homeTeam}</span>
+                    </div>
+                    <div className="flex items-center space-x-3 mb-2">
+                        <div className="w-5 h-5 bg-muted rounded-full flex items-center justify-center">
+                            <div className="w-2 h-2 bg-primary rounded-full"></div>
+                        </div>
+                        <span className="font-semibold text-foreground text-sm">{settledBet.awayTeam}</span>
+                    </div>
+                    
+                    {/* Time and Competition */}
+                    <div className="text-xs text-muted-foreground ml-8 flex items-center gap-2">
+                        <span>{formatDateTime(settledBet.dateTime)}</span>
+                        <span>•</span>
+                        <span>{settledBet.competition}</span>
+                    </div>
                 </div>
 
-                {/* HOME VS AWAY */}
-                <div className='flex'>
-                    <p className="font-semibold text-lg text-gray-800">{settledBet.homeTeam}</p>
-                    <span className="flex items-center mx-2 text-sm font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded-full">VS</span>
-                    <p className="font-semibold text-lg text-gray-800">{settledBet.awayTeam}</p>
-                </div>
-
-                {/* DATE */}
-                <p className="text-sm">{settledBet.dateTime}</p>
-                
-                {/* ODDS BUTTONS */}
-                <div className="w-full flex gap-3 h-full">
+                {/* Right Side - Odds */}
+                <div className="flex items-center space-x-2">
                     {oddsTypes.map((oddType, index) => {
                         const isChosen = settledBet.chosenResult === oddType;
                         const isActual = settledBet.actualResult === oddType;
                         
-                        let boxStyle = 'border-gray-200 bg-white text-gray-700';
-                        let textStyle = 'text-gray-500';
+                        let buttonStyle = {};
+                        let buttonClass = "w-16 h-16 text-xs flex flex-col items-center justify-center p-2";
                         
                         if (isChosen && isActual) {
-                            boxStyle = 'border-[#267A54] bg-green-50 text-[#267A54]';
-                            textStyle = 'text-[#267A54]';
+                            // User chose correctly - green
+                            buttonStyle = {
+                                backgroundColor: '#10b981',
+                                color: 'white',
+                                borderColor: '#10b981'
+                            };
                         } else if (isChosen && !isWin) {
-                            boxStyle = 'border-red-500 bg-red-50 text-red-500';
-                            textStyle = 'text-red-500';
+                            // User chose incorrectly - red
+                            buttonStyle = {
+                                backgroundColor: '#ef4444',
+                                color: 'white',
+                                borderColor: '#ef4444'
+                            };
                         } else if (isActual && !isWin) {
-                            boxStyle = 'border-[#267A54] bg-green-50 text-[#267A54]';
-                            textStyle = 'text-[#267A54]';
+                            // Correct answer when user lost - green
+                            buttonStyle = {
+                                backgroundColor: '#10b981',
+                                color: 'white',
+                                borderColor: '#10b981'
+                            };
                         }
 
                         return (
-                            <div 
+                            <Button
                                 key={oddType}
-                                className={`w-1/3 flex flex-col items-center justify-center border-2 ${boxStyle} rounded-2xl p-4 font-semibold text-lg`}
+                                variant="outline"
+                                size="sm"
+                                className={buttonClass}
+                                style={buttonStyle}
+                                disabled
                             >
-                                <div className={`text-xs mb-1 ${textStyle}`}>{oddType}</div>
-                                {settledBet.odds[index]}
-                            </div>
+                                <div className="text-xs font-medium">{oddType}</div>
+                                <div className="text-xs font-bold">{settledBet.odds[index]}</div>
+                            </Button>
                         );
                     })}
                 </div>
+            </div>
 
-                {/* BET INFORMATION */}
-                <div className="flex items-center gap-3 w-full">
-                    {/* WAGER */}
-                    <div className="w-1/2">
-                        <label className="block text-xs font-medium text-gray-500 mb-1">Wager ($)</label>
-                        <div className="w-full px-3 py-2 text-sm bg-gray-50 rounded-lg">
+            {/* Bet Information */}
+            <div className="mt-3 pt-3 border-t border-border">
+                <div className="flex space-x-3">
+                    <div className="flex-1">
+                        <div className="text-xs font-medium text-muted-foreground mb-1">Wager</div>
+                        <div className="text-sm font-semibold text-foreground">
                             {settledBet.wager}
                         </div>
                     </div>
-
-                    {/* NET PAYOUT */}
-                    <div className="w-1/2">
-                        <label className="block text-xs font-medium text-gray-500 mb-1">Net Payout</label>
+                    <div className="flex-1">
+                        <div className="text-xs font-medium text-muted-foreground mb-1">Net Payout</div>
                         <div className={`text-sm font-semibold ${netColor}`}>
                             {settledBet.netPayout}
                         </div>
                     </div>
                 </div>
             </div>
-        </Card>
+        </div>
     );
 }
 

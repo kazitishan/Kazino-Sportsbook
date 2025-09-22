@@ -2,12 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { Button } from '@/components/ui/button';
 
 function DateNavigator() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const [currentDate, setCurrentDate] = useState(new Date());
     const [displayText, setDisplayText] = useState('Today');
+    const [showLive, setShowLive] = useState(searchParams.get('live') === 'true');
 
     useEffect(() => {
         const dateParam = searchParams.get('date');
@@ -19,6 +21,9 @@ function DateNavigator() {
             setCurrentDate(new Date());
             setDisplayText('Today');
         }
+        
+        // Update live state based on URL parameter
+        setShowLive(searchParams.get('live') === 'true');
     }, [searchParams]);
 
     const updateDisplayText = (date) => {
@@ -77,41 +82,73 @@ function DateNavigator() {
         return currentDateOnly.getTime() === todayOnly.getTime();
     };
 
+    const handleLiveToggle = () => {
+        if (!isToday()) return;
+        
+        const newShowLive = !showLive;
+        const currentParams = new URLSearchParams(searchParams.toString());
+        
+        if (newShowLive) {
+            currentParams.set('live', 'true');
+        } else {
+            currentParams.delete('live');
+        }
+        
+        const newUrl = `/?${currentParams.toString()}`;
+        router.push(newUrl);
+    };
+
     return (
-        <div className="flex items-center justify-center">
-            <div className="flex items-center bg-white rounded-full shadow-lg border border-gray-200 px-4 py-2">
+        <div className="flex items-center justify-center space-x-4">
+            <div className="flex items-center bg-card rounded-lg border border-border px-4 py-2">
                 {/* Back Arrow */}
-                <button
+                <Button
+                    variant="ghost"
+                    size="sm"
                     onClick={goBack}
                     disabled={isToday()}
-                    className={`p-2 rounded-full transition-colors ${
-                        isToday()
-                            ? 'text-gray-300 cursor-not-allowed' 
-                            : 'text-gray-600 hover:bg-gray-100'
-                    }`}
+                    className="p-2 h-8 w-8"
                     aria-label="Previous day"
                 >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                     </svg>
-                </button>
+                </Button>
 
                 {/* Current Date Display */}
                 <div className="mx-4 px-4 py-1">
-                    <span className="text-lg font-semibold text-gray-800">{displayText}</span>
+                    <span className="text-lg font-semibold text-foreground">{displayText}</span>
                 </div>
 
                 {/* Forward Arrow */}
-                <button
+                <Button
+                    variant="ghost"
+                    size="sm"
                     onClick={goForward}
-                    className="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-600"
+                    className="p-2 h-8 w-8"
                     aria-label="Next day"
                 >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
-                </button>
+                </Button>
             </div>
+
+            {/* Live Matches Toggle */}
+            {isToday() && (
+                <Button
+                    variant={showLive ? "default" : "outline"}
+                    size="sm"
+                    onClick={handleLiveToggle}
+                    className="px-4 py-2 h-10"
+                    aria-label="Toggle live matches"
+                >
+                    <div className="flex items-center space-x-2">
+                        <div className={`w-2 h-2 rounded-full ${showLive ? 'bg-white animate-pulse' : 'bg-red-500'}`}></div>
+                        <span className="text-sm font-medium">LIVE</span>
+                    </div>
+                </Button>
+            )}
         </div>
     );
 }

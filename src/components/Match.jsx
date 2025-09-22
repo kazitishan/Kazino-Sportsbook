@@ -1,6 +1,9 @@
 "use client"
 import { useState, useEffect } from 'react';
-import Card from './Card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
+import { Card, CardContent } from '@/components/ui/card';
 import { useAuth } from '@/contexts/AuthContext';
 import { bettingService } from '@/services/bettingService';
 import Toast from './Toast';
@@ -102,88 +105,110 @@ function Match({ match, competition }) {
 
     const isBetReady = selectedOdd && wagerAmount && user && !hasExistingBet;
 
+    // Format date and time
+    const formatDateTime = (dateTime) => {
+        if (!dateTime || dateTime === 'Date not available') return 'TBD';
+        const match = dateTime.match(/^(\d{2}-\d{2}-\d{4})\s+(.+)$/);
+        if (match) {
+            const [, date, time] = match;
+            const [month, day, year] = date.split('-');
+            const dateObj = new Date(year, month - 1, day);
+            const dayName = dateObj.toLocaleDateString('en-US', { weekday: 'short' });
+            return `${dayName} ${month}/${day} • ${time}`;
+        }
+        return dateTime;
+    };
+
     return (
         <>
             <Card>
-                <div data-match-link={match.matchLink} className="w-full flex flex-col items-center gap-2">
-
-                    {/* COMPETITION */}
-                    <div className="flex items-center gap-2">
-                        <img src={`/competitions/${competition}.svg`} className="w-5 h-5" alt={competition} />
-                        <p className="text-sm font-medium text-gray-600">{competition}</p>
+                <CardContent className="p-2">
+                {/* Main Content Row */}
+                <div className="flex items-center justify-between">
+                    {/* Left Side - Teams and Time */}
+                    <div className="flex-1">
+                        {/* Teams */}
+                        <div className="flex items-center space-x-3 mb-1">
+                            <div className="w-5 h-5 bg-muted rounded-full flex items-center justify-center">
+                                <div className="w-2 h-2 bg-primary rounded-full"></div>
+                            </div>
+                            <span className="font-semibold text-foreground text-sm">{match.homeTeam}</span>
+                        </div>
+                        <div className="flex items-center space-x-3 mb-2">
+                            <div className="w-5 h-5 bg-muted rounded-full flex items-center justify-center">
+                                <div className="w-2 h-2 bg-primary rounded-full"></div>
+                            </div>
+                            <span className="font-semibold text-foreground text-sm">{match.awayTeam}</span>
+                        </div>
+                        
+                        {/* Time and Competition */}
+                        <div className="text-xs text-muted-foreground ml-8 flex items-center gap-2">
+                            <span>{formatDateTime(match.dateTime)}</span>
+                            <span>•</span>
+                            <span>{competition}</span>
+                        </div>
                     </div>
 
-                    {/* HOME VS AWAY */}
-                    <div className='flex'>
-                        <p className="font-semibold text-lg text-gray-800">{match.homeTeam}</p>
-                        <span className="flex items-center mx-2 text-sm font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded-full">VS</span>
-                        <p className="font-semibold text-lg text-gray-800">{match.awayTeam}</p>
-                    </div>
-
-                    {/* DATE */}
-                    <p className="text-sm">{match.dateTime}</p>
-                    
-                    {/* ODDS BUTTONS */}
-                    <div className="w-full flex gap-3 h-full">
+                    {/* Right Side - Odds */}
+                    <div className="flex items-center space-x-2">
                         {oddsTypes.map((oddType, index) => (
-                            <button 
+                            <Button
                                 key={oddType}
-                                className={`w-1/3 flex flex-col items-center justify-center border-2 ${
+                                variant={selectedOdd === oddType ? "default" : "outline"}
+                                size="sm"
+                                className={`w-16 h-16 text-xs flex flex-col items-center justify-center p-2 ${
                                     selectedOdd === oddType 
-                                        ? 'border-[#267A54] bg-green-50 text-[#267A54]' 
-                                        : 'border-gray-200 text-gray-700'
-                                } rounded-2xl p-4 font-semibold text-lg`}
+                                        ? 'bg-primary text-primary-foreground' 
+                                        : 'bg-transparent border-border hover:bg-muted'
+                                }`}
                                 onClick={() => handleOddSelection(oddType)}
+                                disabled={hasExistingBet}
                             >
-                                <div className={`text-xs mb-1 ${
-                                    selectedOdd === oddType ? 'text-[#267A54]' : 'text-gray-500'
-                                }`}>{oddType}</div>
-                                {match.odds[index]}
-                            </button>
+                                <div className="text-xs font-medium">{oddType}</div>
+                                <div className="text-xs font-bold">{match.odds[index]}</div>
+                            </Button>
                         ))}
                     </div>
+                </div>
 
-                    {/* BET INFORMATION */}
-                    <div className="flex items-center gap-3 w-full">
-                        {/* WAGER */}
-                        <div className="w-1/3">
-                            <label htmlFor={`wager-${match.matchLink}`} className="block text-xs font-medium text-gray-500 mb-1">Wager ($)</label>
-                            <input
-                                id={`wager-${match.matchLink}`}
-                                name={`wager-${match.matchLink}`}
-                                type="text"
-                                inputMode="decimal"
-                                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#09C285] focus:border-transparent"
-                                placeholder="$0.00"
-                                value={wagerAmount}
-                                onChange={handleWagerChange}
-                                disabled={hasExistingBet}
-                            />
-                        </div>
-
-                        {/* NET PAYOUT */}
-                        <div className="w-1/3">
-                            <p className="block text-xs font-medium text-gray-500 mb-1">Net Payout</p>
-                            <div className="text-sm font-semibold text-gray-900 overflow-scroll">
-                                {netPayout}
+                {/* Betting Controls */}
+                {selectedOdd && (
+                    <div className="mt-3 pt-3 border-t border-border">
+                        <div className="flex space-x-3 items-center">
+                            <div className="flex-1">
+                                <label htmlFor={`wager-${match.matchLink}`} className="block text-xs font-medium text-muted-foreground mb-1">
+                                    Wager ($)
+                                </label>
+                                <input
+                                    id={`wager-${match.matchLink}`}
+                                    type="text"
+                                    inputMode="decimal"
+                                    className="w-full px-3 py-2 text-sm bg-background border border-border rounded-md focus:ring-2 focus:ring-ring focus:border-transparent"
+                                    placeholder="$0.00"
+                                    value={wagerAmount}
+                                    onChange={handleWagerChange}
+                                    disabled={hasExistingBet}
+                                />
+                            </div>
+                            <div className="flex-1">
+                                <div className="text-xs font-medium text-muted-foreground mb-1">Net Payout</div>
+                                <div className="text-sm font-semibold text-foreground">
+                                    {netPayout}
+                                </div>
+                            </div>
+                            <div className="flex-1">
+                                <Button 
+                                    onClick={handlePlaceBet}
+                                    className="w-full"
+                                    disabled={!isBetReady || loading}
+                                >
+                                    {loading ? 'Placing...' : hasExistingBet ? 'Already Bet' : 'Place Bet'}
+                                </Button>
                             </div>
                         </div>
-
-                        {/* PLACE BET BUTTON */}
-                        <div className="w-1/3">
-                            <button 
-                                onClick={handlePlaceBet}
-                                className={`w-full text-white text-sm font-semibold py-2 px-4 rounded-lg transition-colors duration-300 ${
-                                    isBetReady ? 'bg-[#267A54] hover:bg-[#1E5A3D]' : 'bg-gray-400 cursor-not-allowed'
-                                }`}
-                                disabled={!isBetReady || loading}
-                            >
-                                {loading ? 'Placing...' : hasExistingBet ? 'Already Bet' : 'Place Bet'}
-                            </button>
-                        </div>
                     </div>
-
-                </div>
+                )}
+                </CardContent>
             </Card>
             
             {/* Toast Notification */}

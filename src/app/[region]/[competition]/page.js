@@ -32,6 +32,7 @@ export default async function CompetitionDetails({ params }) {
     return (
       <div className="p-4">
         <MatchesContainer 
+          region={competitionData.region} 
           name={competitionData.competition} 
           matches={competitionData.matches || []} 
         />

@@ -1,67 +1,95 @@
-import Card from "./Card";
+import { Button } from '@/components/ui/button';
 
 function ActiveBet({ activeBet }) {
     const oddsTypes = ["HOME", "DRAW", "AWAY"];
 
+    // Format date and time
+    const formatDateTime = (dateTime) => {
+        if (!dateTime || dateTime === 'Date not available') return 'TBD';
+        const match = dateTime.match(/^(\d{2}-\d{2}-\d{4})\s+(.+)$/);
+        if (match) {
+            const [, date, time] = match;
+            const [month, day, year] = date.split('-');
+            const dateObj = new Date(year, month - 1, day);
+            const dayName = dateObj.toLocaleDateString('en-US', { weekday: 'short' });
+            return `${dayName} ${month}/${day} • ${time}`;
+        }
+        return dateTime;
+    };
+
     return (
-        <Card>
-            <div data-match-link={activeBet.matchLink} className="w-full flex flex-col items-center gap-2">
-
-                {/* COMPETITION */}
-                <div className="flex items-center gap-2">
-                    <img src={`/competitions/${activeBet.competition}.svg`} className="w-5 h-5" alt={activeBet.competition} />
-                    <p className="text-sm font-medium text-gray-600">{activeBet.competition}</p>
-                </div>
-
-                {/* HOME VS AWAY */}
-                <div className='flex'>
-                    <p className="font-semibold text-lg text-gray-800">{activeBet.homeTeam}</p>
-                    <span className="flex items-center mx-2 text-sm font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded-full">VS</span>
-                    <p className="font-semibold text-lg text-gray-800">{activeBet.awayTeam}</p>
-                </div>
-
-                {/* DATE */}
-                <p className="text-sm">{activeBet.dateTime}</p>
-                
-                {/* ODDS BUTTONS */}
-                <div className="w-full flex gap-3 h-full">
-                    {oddsTypes.map((oddType, index) => (
-                        <div 
-                            key={oddType}
-                            className={`w-1/3 flex flex-col items-center justify-center border-2 ${
-                                activeBet.chosenResult === oddType 
-                                    ? 'border-[#267A54] bg-green-50 text-[#267A54]' 
-                                    : 'border-gray-200 text-gray-700'
-                            } rounded-2xl p-4 font-semibold text-lg`}
-                        >
-                            <div className={`text-xs mb-1 ${
-                                activeBet.chosenResult === oddType ? 'text-[#267A54]' : 'text-gray-500'
-                            }`}>{oddType}</div>
-                            {activeBet.odds[index]}
+        <div data-match-link={activeBet.matchLink} className="w-full px-3 py-2 bg-card border border-border rounded-lg">
+            {/* Main Content Row */}
+            <div className="flex items-center justify-between">
+                {/* Left Side - Teams and Time */}
+                <div className="flex-1">
+                    {/* Teams */}
+                    <div className="flex items-center space-x-3 mb-1">
+                        <div className="w-5 h-5 bg-muted rounded-full flex items-center justify-center">
+                            <div className="w-2 h-2 bg-primary rounded-full"></div>
                         </div>
+                        <span className="font-semibold text-foreground text-sm">{activeBet.homeTeam}</span>
+                    </div>
+                    <div className="flex items-center space-x-3 mb-2">
+                        <div className="w-5 h-5 bg-muted rounded-full flex items-center justify-center">
+                            <div className="w-2 h-2 bg-primary rounded-full"></div>
+                        </div>
+                        <span className="font-semibold text-foreground text-sm">{activeBet.awayTeam}</span>
+                    </div>
+                    
+                    {/* Time and Competition */}
+                    <div className="text-xs text-muted-foreground ml-8 flex items-center gap-2">
+                        <span>{formatDateTime(activeBet.dateTime)}</span>
+                        <span>•</span>
+                        <span>{activeBet.competition}</span>
+                    </div>
+                </div>
+
+                {/* Right Side - Odds */}
+                <div className="flex items-center space-x-2">
+                    {oddsTypes.map((oddType, index) => (
+                        <Button
+                            key={oddType}
+                            variant={activeBet.chosenResult === oddType ? "default" : "outline"}
+                            size="sm"
+                            className={`w-16 h-16 text-xs flex flex-col items-center justify-center p-2 ${
+                                activeBet.chosenResult === oddType 
+                                    ? 'bg-primary text-primary-foreground' 
+                                    : 'bg-transparent border-border'
+                            }`}
+                            disabled
+                        >
+                            <div className="text-xs font-medium">{oddType}</div>
+                            <div className="text-xs font-bold">{activeBet.odds[index]}</div>
+                        </Button>
                     ))}
                 </div>
+            </div>
 
-                {/* BET INFORMATION */}
-                <div className="flex items-center gap-3 w-full">
-                    {/* WAGER */}
-                    <div className="w-1/2">
-                        <label className="block text-xs font-medium text-gray-500 mb-1">Wager ($)</label>
-                        <div className="w-full px-3 py-2 text-sm bg-gray-50 rounded-lg">
-                            {activeBet.wager}
+            {/* Bet Information */}
+            <div className="mt-3 pt-3 border-t border-border">
+                <div className="flex space-x-3">
+                    <div className="flex-1">
+                        <div className="text-xs font-medium text-muted-foreground mb-1">Wager ($)</div>
+                        <div className="text-sm font-semibold text-foreground">
+                            ${activeBet.wager}
                         </div>
                     </div>
-
-                    {/* NET PAYOUT */}
-                    <div className="w-1/2">
-                        <label className="block text-xs font-medium text-gray-500 mb-1">Net Payout</label>
-                        <div className="text-sm font-semibold text-gray-900 overflow-scroll">
-                            {activeBet.netPayout}
+                    <div className="flex-1">
+                        <div className="text-xs font-medium text-muted-foreground mb-1">Net Payout</div>
+                        <div className="text-sm font-semibold text-foreground">
+                            ${activeBet.netPayout}
+                        </div>
+                    </div>
+                    <div className="flex-1">
+                        <div className="text-xs font-medium text-muted-foreground mb-1">Status</div>
+                        <div className="text-sm font-semibold text-primary">
+                            Active
                         </div>
                     </div>
                 </div>
             </div>
-        </Card>
+        </div>
     );
 }
 

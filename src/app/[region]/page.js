@@ -13,6 +13,7 @@ export default async function RegionPage({ params }) {
                 {regionData.map(competition => (
                     <MatchesContainer
                         key={competition.competition}
+                        region={competition.region}
                         name={competition.competition}
                         matches={competition.matches}
                     />
