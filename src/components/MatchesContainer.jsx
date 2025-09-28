@@ -18,11 +18,8 @@ function MatchesContainer({ region, name, matches = [], type = "matches" }) {
     else { headerText = `${name}`; }
 
     let imagePath = null;
-    if (region != null) { imagePath = `/competitions/${region}/${name}.svg` }
+    if (region != null) { imagePath = `/flags/${region}.svg` }
     else { imagePath = `/${name}.svg` }
-
-    // const isValidImagePath = checkImageExists(imagePath);
-    // if (!isValidImagePath) { imagePath = `/flags/${region}.svg` }
 
     const toggleExpanded = () => {
         setIsExpanded(!isExpanded);
